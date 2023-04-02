@@ -1,7 +1,8 @@
 # DP-Series-
 Sheet 
-1. Climbing stairs: https://leetcode.com/problems/partition-equal-subset-sum/description/
+1. Partition equal sum : https://leetcode.com/problems/partition-equal-subset-sum/description/
 ```
+// This is my first code on Github
 class Solution {
 public:
 int n;
