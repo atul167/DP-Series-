@@ -35,7 +35,7 @@ bool check=false;
     }
 };
 ```
-2. Longest Increasing subsequence (finding the length and printing the subsequence)
+2. Longest Increasing subsequence (finding the length and printing the subsequence):https://leetcode.com/problems/longest-increasing-subsequence/
 ```
 class Solution {
 public:
