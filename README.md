@@ -35,3 +35,48 @@ bool check=false;
     }
 };
 ```
+2. Longest Increasing subsequence (finding the length and printing the subsequence)
+```
+class Solution {
+public:
+#define ll long long 
+    int lengthOfLIS(vector<int>& arr) {
+      int n=arr.size();
+     int dp[n];
+   int hash[n];// for hashing the index
+   for(int i=0;i<n;i++)
+   hash[i]=i;
+   int lst=-1;
+   for(int i=0;i<n;i++)
+   {
+       dp[i]=1;
+       for(int j=0;j<i;j++)
+       {
+           if(arr[i]>arr[j]&&dp[i]<=(dp[j]+1))
+           {
+               dp[i]=dp[j]+1;
+               hash[i]=j;
+           }
+       }
+   }
+   int maxi=0;
+   for(int i=0;i<n;i++)
+   {
+     if (maxi <= dp[i]) {
+       maxi = dp[i];
+       lst = i;
+     }
+   }
+   vector <int> v;
+   while (hash[lst] != lst)
+    {
+        v.push_back(arr[lst]);
+        lst=hash[lst];
+    }
+    for(int i=0;i<n;i++)
+    cout<<dp[i]<<" ";
+    cout<<endl;
+    return maxi;
+    }
+};
+```
