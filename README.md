@@ -40,9 +40,9 @@ bool check=false;
 class Solution {
 public:
 #define ll long long 
-    int lengthOfLIS(vector<int>& arr) {
-      int n=arr.size();
-     int dp[n];
+ int lengthOfLIS(vector<int>& arr) {
+   int n=arr.size();
+   int dp[n];
    int hash[n];// for hashing the index
    for(int i=0;i<n;i++)
    hash[i]=i;
