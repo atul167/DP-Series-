@@ -80,3 +80,30 @@ public:
     }
 };
 ```
+3.Buy and sell stock (3) :https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
+```
+class Solution {
+public:
+int n;
+    int maxProfit(vector<int>& prices) {
+        n=prices.size();
+        vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+        int buy=1,cap=2;
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int buy=0;buy<=1;buy++)
+            {
+                for(int cap=1;cap<=2;cap++)
+                {
+                    if(buy)
+                    dp[i][buy][cap]=max(-prices[i]+dp[i+1][buy^1][cap],dp[i+1][buy][cap]);// buy or skip
+                    else
+                    dp[i][buy][cap]=max(prices[i]+dp[i+1][buy^1][cap-1],dp[i+1][buy][cap]);// sell or skip ,cap value changes if sold as one transaction has been done
+                }
+
+            }
+        }
+        return dp[0][1][2];
+    }
+};
+```
