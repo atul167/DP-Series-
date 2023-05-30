@@ -80,8 +80,31 @@ public:
     }
 };
 ```
+NlogN method:
+
+![image](https://github.com/atul167/DP-Series-/assets/76389640/8c0a0af9-c628-4332-9bfe-576cde90e85b)
+```
+for (int i = 0; i < n;i++){
+		cin >> a[i];}
+	de(a);
+	dp.push_back(a[0]);
+	for(int i=1;i<n;i++){
+		int pos = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
+		if(pos==dp.size()){
+			//we can have a longer lis
+		dp.pb(a[i]);
+		}
+		else
+		dp[pos] = a[i];//we can have smaller element at the last
+		de(dp);
+	}
+	de(dp);
+	cout << dp.size() << endl;
+    
+```
 3.Buy and sell stock (3) :https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 ```
+
 class Solution {
 public:
 int n;
