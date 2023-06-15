@@ -160,3 +160,30 @@ public:
     }
 };
 ```
+5. Distinct subsequence :https://leetcode.com/problems/distinct-subsequences-ii/description/
+```
+class Solution {
+public:
+#define ll long long 
+const ll md=1e9+7;
+    int distinctSubseqII(string s) {
+        map<char,int>last;
+        int n=s.size();
+        vector<ll>dp(n+1,0);
+        dp[0]=1;
+        for(int i=1;i<=n;i++){
+            dp[i]=(1ll*2*dp[i-1])%md;
+            if(last.count(s[i-1]))
+            {
+                int x=last[s[i-1]];
+                dp[i]-=x;
+            }
+            dp[i]=(dp[i]+md)%md;           
+            last[s[i-1]]=dp[i-1];
+        }
+        ll x=dp[n]-1;
+        x=(x+md)%md;
+        return x;
+    }
+};
+```
