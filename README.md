@@ -187,3 +187,122 @@ const ll md=1e9+7;
     }
 };
 ```
+6.Poisonous Full Course :https://atcoder.jp/contests/abc306/tasks/abc306_d
+```
+#include<bits/stdc++.h>
+using namespace std;
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define mod 1000000007
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define set_bits __builtin_popcountll
+#define all(x) (x).begin(), (x).end()
+typedef long long ll;
+typedef long double lld;
+const int md = 998244353;
+const int mxn = 50001;
+int main() {
+	ll n;
+	cin >> n;
+	vector<pair<ll,ll>>vec(n);
+	for(int i=0;i<n;i++){
+		cin>>vec[i].ff>>vec[i].ss;
+	}
+	ll dp[n+1][2];
+	for(int i=0;i<=n;i++){
+		dp[i][0]=-4e18;
+		dp[i][1]=-4e18;
+	}
+	dp[0][0]=0;
+	ll health=0;
+	for(int i=0;i<n;i++){
+		ll type=vec[i].ff;
+		ll f=vec[i].ss;
+		//eating the choice
+		if(type==0){
+			dp[i+1][0]=max(max(dp[i][0],dp[i][1])+f,dp[i][0]);
+		}
+		else{
+			dp[i+1][1]=max(dp[i][0]+f,dp[i][1]);
+		}
+		//skipping the choice 
+		dp[i+1][0]=max(dp[i][0],dp[i+1][0]);
+		dp[i+1][1]=max(dp[i][1],dp[i+1][1]);
+		
+	}
+	cout<<max(dp[n][0],dp[n][1])<<endl;
+	return 0;
+}
+```
+7.https://cses.fi/problemset/task/1679 (Based on Topological Sort):
+#include<bits/stdc++.h>
+using namespace std;
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define mod 1000000007
+#define pb push_back
+#define ff first
+#define ss second
+#define all(x) (x).begin(), (x).end()
+typedef long long ll;
+typedef long double lld;
+const int mxn = 2e5 + 100; 
+stack<ll>s;
+vector<bool>vis;
+vector<vector<ll>>adj(mxn);
+void dfs(int v,vector<vector<ll>>&adj){
+	vis[v]=1;
+	for(auto u:adj[v]){
+		if(!vis[u]){
+			dfs(u,adj);
+		}
+	}
+	s.push(v);
+}
+void pr(){
+	cout<<"IMPOSSIBLE"<<endl;
+}
+int main() {
+ll tt;
+tt=1;
+while (tt--)
+{
+	ll n,m;
+	cin>>n>>m;
+	vis=vector<bool>(n);
+	for(int i=0;i<m;i++){
+		ll u,v;
+		cin>>u>>v;
+		--u;--v;
+		adj[u].pb(v);
+	}
+	vector<ll>ans;
+	for(int i=0;i<n;i++){
+		if(!vis[i])
+		dfs(i,adj);
+	}
+	while(!s.empty()){
+		auto x=s.top();
+		ans.pb(x);
+		s.pop();
+	}
+	vector<ll>index(n);
+	for(int i=0;i<n;i++){
+		index[ans[i]]=i;
+	}
+	for(int i=0;i<n;i++){
+		for(auto u:adj[i]){
+			if(index[i]>index[u])
+			{
+				pr();
+				return 0;
+			}
+		}
+	}
+	for(auto u:ans)
+	cout<<u+1<<" ";
+	cout<<endl;
+}
+return 0;
+}
