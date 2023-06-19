@@ -308,3 +308,55 @@ while (tt--)
 return 0;
 }
 ```
+8: Digit Sum between L to R(https://www.spoj.com/problems/PR003004/)
+```
+#include<bits/stdc++.h>
+using namespace std;
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define mod 1000000007
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define set_bits __builtin_popcountll
+#define all(x) (x).begin(), (x).end()
+typedef long long ll;
+typedef long double lld;
+const int mxn = 1e5 + 100;
+ll dp[20][200][2];
+string str;
+ll solve(ll pos,ll sum,ll tight){
+	if(pos==str.size())
+		return sum;
+	if(dp[pos][sum][tight]!=-1)
+		return dp[pos][sum][tight];
+	int ub = 0;
+	if (tight)
+		ub = str[pos] - '0';
+	else
+		ub = 9;
+	ll ans = 0;
+	for (int i = 0; i <= ub;i++){
+		ans += solve(pos + 1, sum + i, (tight & (i == ub)));
+	}
+	return dp[pos][sum][tight] = ans;
+}
+ll go(ll x){
+	str = to_string(x);
+	memset(dp, -1, sizeof(dp));
+	return solve(0, 0, 1);
+}
+int main() {
+	fastio();
+	ll tt;
+	cin >> tt;
+	while (tt--)
+	{
+		ll a, b;
+		cin >> a >> b;
+		memset(dp, -1, sizeof(dp));
+			cout << go(b) - go(a - 1) << endl;
+}
+return 0;
+}
+```
