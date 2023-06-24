@@ -34,6 +34,23 @@ bool check=false;
       return dp[n][sum];
     }
 };
+----------------------------------------------------------
+#include <bits/stdc++.h> 
+int dp[1001][10001];
+bool solve(int pos,int n,int k,vector<int>&arr,int sum){
+  if (pos == n) {
+    if (sum == k)
+      return true;
+    return false;
+  }
+  if (dp[pos][sum] != -1)
+    return dp[pos][sum];
+  return dp[pos][sum]=solve(pos + 1, n, k, arr, sum + arr[pos])|solve(pos+1,n,k,arr,sum);
+}
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+  memset(dp,-1,sizeof(dp));
+    return solve(0,n,k,arr,0);
+}
 ```
 2. Longest Increasing subsequence (finding the length and printing the subsequence):https://leetcode.com/problems/longest-increasing-subsequence/
 ```
