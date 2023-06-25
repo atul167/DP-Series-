@@ -377,3 +377,40 @@ int main() {
 return 0;
 }
 ```
+9.Cherry Pickup :https://leetcode.com/problems/cherry-pickup-ii/
+```
+class Solution {
+public:
+#define ll long long 
+int dp[73][73][73];
+int n,m;
+int  solve(int row,int col1,int col2,vector<vector<int>>&grid)
+{
+    if(row>=n||col1<0||col2<0||col1>=m||col2>=m)
+    return 0;
+    if(dp[row][col1][col2]!=-1)
+    return dp[row][col1][col2];
+   int res=0;
+   res+=grid[row][col1];
+   if(col1!=col2)
+   res+=grid[row][col2];
+   int mx=0;
+   
+       for(int i=col1-1;i<=col1+1;i++)
+       {
+           for(int j=col2-1;j<=col2+1;j++)
+           mx=max(mx,solve(row+1,i,j,grid));
+       }
+ 
+   res+=mx;
+   return dp[row][col1][col2]=res;
+}
+int cherryPickup(vector<vector<int>>& grid) {
+        n=grid.size();
+        m=grid[0].size();
+        memset(dp,-1,sizeof(dp));
+       return  solve(0,0,m-1,grid);
+    }
+};
+
+```
