@@ -681,3 +681,29 @@ class Solution{
 };
 
 ```
+19. LCS:  (https://www.codingninjas.com/studio/problems/longest-common-subsequence_624879?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos)
+```
+
+int dp[1001][1001];
+
+int n,m;
+int f(int i,int j,string &s,string &t){
+	if(j==m||i==n){
+		return 0;
+	}
+	if(dp[i][j]!=-1)
+	return dp[i][j];
+	if(s[i]==t[j])
+	return dp[i][j]=1+f(i+1,j+1,s,t);
+	else{
+		return dp[i][j]=max(f(i+1,j,s,t),f(i,j+1,s,t));
+	}
+}
+int lcs(string s, string t)
+{
+	n=s.size();
+	m=t.size();
+	memset(dp,-1,sizeof(dp));
+	return f(0,0,s,t);
+}
+```
