@@ -592,3 +592,32 @@ int n;
     }
 };
 ```
+16.Target Sum: https://leetcode.com/problems/target-sum/description/
+```
+class Solution {
+public:
+int dp[21][10001];
+int n,am=0;
+    int f(int pos,vector<int>&nums,int t){
+        if(t<0)
+        return INT_MIN;
+        if(pos==n){
+            if(t==am)
+            return 1;
+            return INT_MIN+1;
+        }
+        if(dp[pos][t]!=-1)
+        return dp[pos][t];
+        int add=max(0,f(pos+1,nums,t+nums[pos]));
+        int sub=max(0,f(pos+1,nums,t-nums[pos]));
+        return dp[pos][t]=add+sub;
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        memset(dp,-1,sizeof(dp));
+        am=target;
+        am+=1000;
+        n=nums.size();
+        return f(0,nums,1000);
+    }
+};
+```
