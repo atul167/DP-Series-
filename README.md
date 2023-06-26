@@ -552,4 +552,43 @@ int findWays(vector<int> &arr, int k) {
 }
 
 ```
-
+15.Coin Change :https://leetcode.com/problems/coin-change/description/
+```
+class Solution {
+public:
+int total;
+//minimum no of coins
+int dp[13][10005];
+int n;
+    int f(int pos,vector<int>&coins,int a){
+        if(a<0)
+        return INT_MAX-1;
+        if(pos==n){
+            if(a==0)
+            return 0;
+            else
+            return INT_MAX-1;
+        }
+        if(dp[pos][a]!=-1)
+        return dp[pos][a];
+        if(a-coins[pos]>=0){
+        int take= 1+f(pos,coins,a-coins[pos]);
+        int ntake=f(pos+1,coins,a);
+        return dp[pos][a]=min({take,ntake});
+        }
+        else{
+            int ntake=f(pos+1,coins,a);
+            return dp[pos][a]=ntake;
+        }
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        n=coins.size();
+        this->total=amount;
+        memset(dp,-1,sizeof(dp));
+       int x= f(0,coins,amount);
+       if(x==INT_MAX-1)
+       return -1;
+       return x;
+    }
+};
+```
