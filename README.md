@@ -651,3 +651,33 @@ int f(int pos,int x,vector<int>&coins){
     }
 };
 ```
+18. Rod Cutting: https://practice.geeksforgeeks.org/problems/rod-cutting0840/1
+```
+class Solution{
+    int n;
+    int dp[1001][1001];
+    int f(int pos,int len, int *price){
+        if(len<0)
+        return INT_MIN;
+        if(pos==n){
+            if(len==0)
+            return 0;
+            else
+            return INT_MIN;
+        }
+        if(dp[pos][len]!=-1)
+        return dp[pos][len];
+        int take=f(pos,len-(pos+1),price)+price[pos];
+        int ntake=f(pos+1,len,price);
+        int ans=max(take,ntake);
+        return dp[pos][len]=ans;
+    }
+  public:
+    int cutRod(int price[], int n) {
+        memset(dp,-1,sizeof(dp));
+        this->n=n;
+        return f(0,n,price);
+    }
+};
+
+```
