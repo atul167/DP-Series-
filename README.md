@@ -522,5 +522,34 @@ bool f(int pos,int sum,vector<vector<int>>&dp,vector<int>&nums){
     }
 };
 ```
+14. Count Subset with sum K: https://www.codingninjas.com/studio/problems/number-of-subsets_3952532?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos&leftPanelTab=0
+```
 
+int n;
+int dp[101][10001];
+const int md=1e9+7;
+int f(int pos, int sum,vector<int> &a, int k) {
+	// cout<<pos<<" "<<sum<<endl;
+	  if (pos == n) {
+    if (sum == k)
+      return 1;
+    else
+      return 0;
+  }
+  if (dp[pos][sum] != -1)
+    return dp[pos][sum];
+  int take  = f(pos + 1, sum + a[pos], a, k);
+  int ntake = f(pos + 1, sum, a, k);
+
+  int ans = take%md+ntake%md;
+  return dp[pos][sum]=ans%md;
+}
+
+int findWays(vector<int> &arr, int k) {
+	n=arr.size();
+	memset(dp,-1,sizeof(dp));
+  return f(0, 0,arr, k);
+}
+
+```
 
