@@ -492,5 +492,35 @@ public:
     }
 };
 ```
+13. Partition sum:https://leetcode.com/problems/partition-equal-subset-sum/description/
+```
+class Solution {
+public:
+int n;
+bool check=false;
+int x;
+bool f(int pos,int sum,vector<vector<int>>&dp,vector<int>&nums){
+    	if(pos==0)
+    		return sum==0;
+    	if(dp[pos][sum]!=-1)
+    		return dp[pos][sum];
+	if(sum>=nums[pos])
+		return dp[pos][sum]=f(pos-1,sum-nums[pos],dp,nums)|f(pos-1,sum,dp,nums);
+    	else
+    		return dp[pos][sum]=f(pos-1,sum,dp,nums);
+}
+    bool canPartition(vector<int>& nums) {
+        n=nums.size();
+        int sum1=accumulate(nums.begin(),nums.end(),0);
+        if(sum1%2==1)
+            return false;
+        int sum=sum1/2;
+        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+        x=sum;
+        return f(n-1,x,dp,nums);
+
+    }
+};
+```
 
 
