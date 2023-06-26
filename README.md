@@ -621,3 +621,33 @@ int n,am=0;
     }
 };
 ```
+17. Coin Change(2): https://leetcode.com/problems/coin-change-ii/description/
+```
+class Solution {
+public:
+int am;
+int dp[301][5008];
+int n;
+int f(int pos,int x,vector<int>&coins){
+    if(x<0)
+    return INT_MIN;
+    if(pos>=n){
+        if(x==0)
+        return 1;
+        else
+        return INT_MIN;
+    }
+    if(dp[pos][x]!=-1)
+    return dp[pos][x];
+    int take=max(0,f(pos,x-coins[pos],coins));
+    int ntake=max(0,f(pos+1,x,coins));
+    int total=take+ntake;
+    return dp[pos][x]=total;
+}
+    int change(int amount, vector<int>& coins) {
+        n=coins.size();
+        memset(dp,-1,sizeof(dp));
+        return f(0,amount,coins);
+    }
+};
+```
