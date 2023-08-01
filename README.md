@@ -707,3 +707,57 @@ int lcs(string s, string t)
 	return f(0,0,s,t);
 }
 ```
+20. Problem Statement:
+Let there be N workers and N jobs. Any worker can be assigned to perform any job, incurring some cost that may vary depending on the work-job assignment. 
+It is required to perform all jobs by assigning exactly one worker to each job and exactly one job to each agent in such a way 
+that the total cost of the assignment is minimized.
+
+Input Format:
+Number of workers and job: N
+Cost matrix C with dimension N*N where C(i,j) is the cost incurred on assigning ith Person to jth Job.
+
+Sample Input:
+4
+9 2 7 8
+6 4 3 7
+5 8 1 8
+7 6 9 4
+
+Sample Output:
+13
+
+```
+Constraints:
+N <= 20
+*/
+
+const int N = 20;
+int n, m;
+ll c[N][N];
+int dp[1 << 20];
+ll f(ll mask) {
+	int set=__builtin_popcount(mask);
+	// (set+1)th job is now being investigated , that who will get it done in least amount
+	if(set==n)
+	return 0;
+	if(dp[mask]!=-1)
+	return dp[mask];
+	 ll ans=INT_MAX;
+	for(int j=0;j<n;j++){
+	if(!(mask&(1<<j))){
+	ans=min(ans,c[set][j]+f(mask|(1ll<<j)));	
+	}
+	}
+	return dp[mask]=ans;
+	}
+int main() {
+	  cin >> n;
+    memset(dp, -1, sizeof dp);
+    for(int i=0;i<n;i++){
+    	for(int j=0;j<n;j++)
+    	cin>>c[i][j];
+    }   
+    cout <<f(0LL)<<endl;
+   return 0;
+}
+```
