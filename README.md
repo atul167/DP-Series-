@@ -737,7 +737,7 @@ ll c[N][N];
 int dp[1 << 20];
 ll f(ll mask) {
 	int set=__builtin_popcount(mask);
-	// (set+1)th job is now being investigated , that who will get it done in least amount
+	// (set) indexed job is now being investigated , that who will get it done in least amount
 	if(set==n)
 	return 0;
 	if(dp[mask]!=-1)
