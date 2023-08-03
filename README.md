@@ -1,4 +1,4 @@
-# DP-Series-
+# Algo-Series-
 Sheet 
 1. Partition equal sum : https://leetcode.com/problems/partition-equal-subset-sum/description/
 ```
