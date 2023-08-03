@@ -870,3 +870,135 @@ class Solution{
 
     
 ```
+23:We have a tree with N
+ vertices numbered 1,2,…,N.
+The ith
+ edge (1≤i≤N−1)
+ connects Vertex ui
+​ and Vertex vi
+​ and has a weight wi
+.
+
+For different vertices u
+ and v
+, let f(u,v)
+ be the greatest weight of an edge contained in the shortest path from Vertex u
+ to Vertex v
+.
+
+Your task is to find
+∑1≤i<j≤Nf(i,j)
+More formally, Please find the sum of the maximum weighted edge over all paths of the tree.
+
+Input
+The first line of input contains an integer N
+ (2≤N≤105)
+ — the number of nodes in the tree.
+
+The next N−1
+ lines contain 3
+ space separated integers each ui
+, vi
+ (1≤ui​,vi​≤N)
+ and wi
+ (1≤wi​≤107)
+ denoting an edge of weight wi
+ between vertices ui
+ and vi
+.
+
+Output
+Print a single integer — the answer to the problem in a single line.
+
+Examples
+input
+3
+1 2 10
+1 3 2
+output
+22 
+input
+5
+1 2 4
+2 3 1
+1 4 6
+4 5 12
+output
+75 
+Note
+In sample test case 1,
+
+f(1,2)=10
+f(1,3)=2
+f(2,3)=10
+Hence the answer is 10+2+10=22
+.
+In sample test case 2,
+
+f(2,3)=1
+f(1,2)=f(1,3)=4
+f(1,4)=f(2,4)=f(3,4)=6
+f(1,5)=f(2,5)=f(3,5)=f(4,5)=12
+Hence the answer is 1+2∗4+3∗6+4∗12=75
+
+Sol:
+```
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+#define pb push_back
+const int mxn=1e5+100;
+ll par[mxn];
+ll sz[mxn];
+ll k=1;
+vector<vector<ll>>edges;
+ll find(ll x){
+  while(x!=par[x])
+  x=find(par[x]);
+  return x;
+}
+bool unite(ll x,ll y){
+  if(find(x)==find(y))
+  return true;
+  x=find(x);
+  y=find(y);
+  k=sz[x]*sz[y];
+  if(sz[x]>=sz[y]){
+    par[y]=x;
+    sz[x]+=sz[y];
+  }
+  else{
+    par[x]=y;
+    sz[y]+=sz[x];
+  }
+  return false;
+}
+int main() {
+  int n;
+  cin>>n;
+  map<ll,ll>m;
+  for(int i=0;i<n+1;i++){
+  par[i]=i;
+  sz[i]=1;}
+  for(int i=0;i<n-1;i++){
+    ll u,v,w;
+    cin>>u>>v>>w;
+    --u;
+    --v;
+   edges.pb({w,u,v});
+  } 
+  sort(edges.begin(),edges.end());
+  ll ans=0;
+  for(auto x:edges){
+      ll u=x[1];
+      ll v=x[2];
+      ll weight=x[0];
+      k=1;
+      unite(u,v);
+      // cout<<u<<" "<<v<<" "<<weight<<endl;
+      ans+=weight*k;
+    }
+  cout<<ans<<endl;
+  return 0;
+  }
+```
