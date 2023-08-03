@@ -761,3 +761,112 @@ int main() {
    return 0;
 }
 ```
+21.Word break:Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+ 
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+Sol:
+```
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        
+        int n=s.size();
+        set<string>st;
+        sort(wordDict.begin(),wordDict.end());
+        vector<int>dp(n+1,0);
+        for(auto u:wordDict)
+        st.insert(u);
+        //dp[i] represents that wrd from 0 till i can be made
+        dp[0]=1;
+        for(int i=1;i<=n;i++){
+            for(int j=i-1;j>=0;j--){
+                if(dp[j]){
+                    string word=s.substr(j,i-j);
+                    
+                    if(st.count(word)){
+                        dp[i]=1;
+                        break;
+                    }
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+```
+22.Rat in a maze problem :
+Consider a rat placed at (0, 0) in a square matrix of order N * N. It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left), 'R' (right). Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it.
+Note: In a path, no cell can be visited more than one time. If the source cell is 0, the rat cannot move to any other cell.
+
+Example 1:
+
+Input:
+N = 4
+m[][] = {{1, 0, 0, 0},
+         {1, 1, 0, 1}, 
+         {1, 1, 0, 0},
+         {0, 1, 1, 1}}
+Output:
+DDRDRR DRDDRR
+Sol:
+```
+
+class Solution{
+    public:
+    int mn;
+    vector<string>ans;
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,1,-1};
+    vector<vector<int>>grid;
+    bool isValid(int i,int j,int n,vector<vector<int>>&vis){
+        if(i<0||j<0||i>=n||j>=mn||vis[i][j]||grid[i][j]==0)
+        return false;
+        return true;
+    }
+    void dfs(int i,int j,int n,string s,vector<vector<int>>&vis){
+        if(i==n-1&&j==n-1){
+        ans.push_back(s);
+        return ;}
+        for(int k=0;k<4;k++){
+            int newX=i+dx[k];
+            int newY=j+dy[k];
+            if(!(isValid(newX,newY,n,vis)))
+            continue;
+            vis[newX][newY]=1;
+            if(k==0)
+            s+="U";
+            else if(k==1)
+            s+="D";
+            else if(k==2)
+            s+="R";
+            else
+            s+="L";
+            dfs(newX,newY,n,s,vis);
+            vis[newX][newY]=0;
+            s.pop_back();
+        }
+    }
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        grid=m;
+      vector<vector<int>>vis(n,vector<int>(n,0));
+      mn=n;
+      vis[0][0]=1;
+      string s="";
+      if(grid[0][0]==0||grid[n-1][n-1]==0)
+      return ans;
+      dfs(0,0,n,s,vis);
+      return ans;
+    }
+};
+
+    
+```
