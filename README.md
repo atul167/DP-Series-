@@ -1,4 +1,4 @@
-# Algo-Series-
+# Algo-Series
 Sheet 
 1. Partition equal sum : https://leetcode.com/problems/partition-equal-subset-sum/description/
 ```
@@ -1063,4 +1063,46 @@ int Solution::books(vector<int> &A, int B) {
     
 }
 
+```
+25 .
+Given an integer array nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. You can return the answer in any order.
+
+You must write an algorithm that runs in linear runtime complexity and uses only constant extra space.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,1,3,2,5]
+Output: [3,5]
+Explanation:  [5, 3] is also a valid answer.
+
+```
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        vector<int>ans;
+        int n=nums.size(),res=0;
+        for(int i=0;i<n;i++){
+            res=res^nums[i];
+        }
+        int pos=0;//position of rightmost set bit
+        for(int i=31;i>=0;i--){
+            if(res&(1<<i)){
+                pos=i;
+                break;
+            }
+        }
+        int a=0,b=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]&(1<<pos)){
+                a=a^nums[i];
+            }
+        }
+         b=res^a;
+        ans.push_back(a);
+        ans.push_back(b);
+        return ans;
+    }
+};
 ```
